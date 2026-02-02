@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AnkitUX — Shopify Store Designer</title>
+
+  <style>
+    :root{
+      --bg:#070A0F;
+      --card:#0B1220;
+      --text:#EAF0FF;
+      --muted:rgba(234,240,255,.72);
+      --border:rgba(0,229,255,.14);
+      --primary:#00E5FF;
+      --primary2:#00B8FF;
+      --shadow: 0 18px 70px rgba(0,229,255,.12);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(0,229,255,.10), transparent 55%),
+                  radial-gradient(900px 600px at 85% 30%, rgba(0,184,255,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:auto;padding:0 18px}
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,15,.72);
+      border-bottom:1px solid rgba(0,229,255,.10);
+    }
+    .navinner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;
+    }
+    .logo{
+      display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px
+    }
+    .dot{
+      width:12px;height:12px;border-radius:999px;
+      background: linear-gradient(135deg,var(--primary),var(--primary2));
+      box-shadow: 0 0 0 6px rgba(0,229,255,.08);
+    }
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{
+      font-size:14px;opacity:.84;transition:.2s;
+      padding:8px 10px;border-radius:12px
+    }
+    .menu a:hover{opacity:1;background: rgba(0,229,255,.08)}
+    .btn{
+      border:1px solid rgba(0,229,255,.22);
+      background: rgba(0,229,255,.08);
+      padding:10px 14px;border-radius:14px;font-weight:700;
+      transition:.2s;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow: var(--shadow)}
+    .btnPrimary{
+      border:none;
+      background: linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#001018;
+    }
+
+    /* HERO */
+    .hero{padding:72px 0 34px}
+    .heroGrid{display:grid;grid-template-columns: 1.15fr .85fr;gap:22px;align-items:center}
+    .badge{
+      display:inline-flex;gap:10px;align-items:center;
+      padding:9px 12px;border-radius:999px;
+      border:1px solid rgba(0,229,255,.18);
+      background: rgba(0,229,255,.06);
+      font-weight:700;font-size:13px;color:var(--muted);
+      width:fit-content;
+    }
+    .badge span{color:var(--primary)}
+    h1{
+      margin:18px 0 12px;
+      font-size:54px; line-height:1.05;
+      letter-spacing:-1px;
+    }
+    .sub{
+      font-size:16px; line-height:1.8;
+      color:var(--muted);
+      margin:0 0 22px;
+      max-width:55ch;
+    }
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+
+    .heroCard{
+      background: linear-gradient(180deg, rgba(0,229,255,.10), rgba(11,18,32,.75));
+      border:1px solid rgba(0,229,255,.16);
+      border-radius: var(--radius);
+      padding:22px;
+      box-shadow: 0 24px 90px rgba(0,0,0,.45);
+      position:relative; overflow:hidden;
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(420px 200px at 50% 0%, rgba(0,229,255,.18), transparent 60%);
+      pointer-events:none;
+    }
+    .statGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .stat{
+      background: rgba(7,10,15,.55);
+      border:1px solid rgba(0,229,255,.12);
+      border-radius: 18px;
+      padding:14px;
+      position:relative; z-index:1;
+    }
+    .stat b{display:block;font-size:18px}
+    .stat small{opacity:.72}
+
+    /* SECTION */
+    section{padding:46px 0}
+    .titleRow{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:16px}
+    .titleRow h2{margin:0;font-size:28px}
+    .titleRow p{margin:0;color:var(--muted);font-size:14px}
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{
+      background: rgba(11,18,32,.70);
+      border:1px solid rgba(0,229,255,.12);
+      border-radius: var(--radius);
+      padding:18px;
+      transition:.2s;
+    }
+    .card:hover{transform:translateY(-2px);box-shadow: var(--shadow)}
+    .icon{
+      width:44px;height:44px;border-radius:16px;
+      background: rgba(0,229,255,.10);
+      border:1px solid rgba(0,229,255,.18);
+      display:grid;place-items:center;
+      margin-bottom:10px;
+      color:var(--primary);
+      font-weight:900;
+    }
+    .card h3{margin:0 0 6px;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+
+    /* PORTFOLIO */
+    .portfolio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .work{
+      border-radius: var(--radius);
+      border:1px solid rgba(0,229,255,.12);
+      background: rgba(7,10,15,.45);
+      overflow:hidden;
+    }
+    .thumb{
+      height:160px;
+      background: radial-gradient(600px 240px at 50% 0%, rgba(0,229,255,.16), transparent 60%),
+                  linear-gradient(180deg, rgba(0,229,255,.08), transparent 70%);
+      border-bottom:1px solid rgba(0,229,255,.10);
+    }
+    .work .info{padding:14px 14px 16px}
+    .work .info b{display:block}
+    .work .info small{color:var(--muted)}
+    .work a{
+      display:inline-flex;gap:8px;align-items:center;
+      margin-top:10px;font-weight:800;font-size:13px;color:var(--primary);
+    }
+
+    /* PRICING */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .price{
+      position:relative;
+      background: rgba(11,18,32,.70);
+      border:1px solid rgba(0,229,255,.12);
+      border-radius: var(--radius);
+      padding:18px;
+    }
+    .price.featured{
+      border:1px solid rgba(0,229,255,.28);
+      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, rgba(0,229,255,.12), rgba(11,18,32,.72));
+    }
+    .price h3{margin:0 0 6px}
+    .price .amt{font-size:30px;font-weight:900;margin:10px 0 6px}
+    .price ul{margin:12px 0 0;padding-left:18px;color:var(--muted);line-height:1.9;font-size:14px}
+    .pill{
+      position:absolute; top:14px; right:14px;
+      padding:7px 10px;border-radius:999px;
+      background: rgba(0,229,255,.10);
+      border:1px solid rgba(0,229,255,.22);
+      font-weight:900;font-size:12px;color:var(--primary);
+    }
+
+    /* CONTACT */
+    .contactCard{
+      display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      background: linear-gradient(135deg, rgba(0,229,255,.10), rgba(11,18,32,.72));
+      border:1px solid rgba(0,229,255,.16);
+      border-radius: var(--radius);
+      padding:20px;
+    }
+
+    footer{
+      padding:28px 0 40px;
+      color:rgba(234,240,255,.55);
+      border-top:1px solid rgba(0,229,255,.10);
+      margin-top:40px;
+      font-size:14px;
+    }
+
+    /* MOBILE */
+    @media(max-width:900px){
+      .heroGrid{grid-template-columns:1fr}
+      h1{font-size:42px}
+      .grid3,.portfolio,.pricing{grid-template-columns:1fr}
+      .menu{display:none}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="container navinner">
+      <a class="logo" href="#top"><span class="dot"></span> AnkitUX</a>
+      <div class="menu">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a class="btn btnPrimary" href="#contact">Hire Me</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div id="top" class="hero">
+    <div class="container heroGrid">
+
+      <div>
+        <div class="badge">⚡ Premium Shopify Store Designer <span>•</span> India</div>
+        <h1>Classy Shopify Stores that convert.</h1>
+        <p class="sub">
+          I design modern, fast and premium Shopify stores for brands.
+          From theme setup to full redesign, I make your store look high-end and sell better.
+        </p>
+
+        <div class="cta">
+          <a class="btn btnPrimary" href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp</a>
+          <a class="btn" href="#portfolio">View Work</a>
+        </div>
+      </div>
+
+      <div class="heroCard">
+        <b style="position:relative;z-index:1;font-size:16px">What you get</b>
+        <p style="position:relative;z-index:1;margin:10px 0 0;color:var(--muted);line-height:1.7">
+          Premium UI, clean layout, trust design and smooth checkout experience.
+        </p>
+
+        <div class="statGrid">
+          <div class="stat"><b>Fast</b><small>Speed optimized</small></div>
+          <div class="stat"><b>Premium</b><small>Luxury look</small></div>
+          <div class="stat"><b>Clean</b><small>No clutter</small></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="titleRow">
+        <div>
+          <h2>Services</h2>
+          <p>Everything you need for a premium Shopify store.</p>
+        </div>
+        <p>Primary color: <b style="color:var(--primary)">Cyan Blue</b></p>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <div class="icon">01</div>
+          <h3>Full Store Setup</h3>
+          <p>Store setup, theme install, pages, navigation, collections and professional structure.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">02</div>
+          <h3>Theme Customization</h3>
+          <p>Advanced customization in Dawn & premium themes. Clean sections with premium look.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">03</div>
+          <h3>Conversion Design</h3>
+          <p>Product page, trust badges, CTA placement, offers layout and conversion improvements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="titleRow">
+        <div>
+          <h2>Portfolio</h2>
+          <p>Add your store links here. It will look premium.</p>
+        </div>
+        <p style="color:var(--muted)">Replace the placeholders later ✅</p>
+      </div>
+
+      <div class="portfolio">
+        <div class="work">
+          <div class="thumb"></div>
+          <div class="info">
+            <b>Store Project 1</b>
+            <small>Theme customization + homepage</small><br>
+            <a href="#" target="_blank">View Live →</a>
+          </div>
+        </div>
+
+        <div class="work">
+          <div class="thumb"></div>
+          <div class="info">
+            <b>Store Project 2</b>
+            <small>Product page redesign</small><br>
+            <a href="#" target="_blank">View Live →</a>
+          </div>
+        </div>
+
+        <div class="work">
+          <div class="thumb"></div>
+          <div class="info">
+            <b>Store Project 3</b>
+            <small>Landing page + speed</small><br>
+            <a href="#" target="_blank">View Live →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="titleRow">
+        <div>
+          <h2>Pricing</h2>
+          <p>Simple packages. No confusion.</p>
+        </div>
+        <p style="color:var(--muted)">₹ Pricing can change later</p>
+      </div>
+
+      <div class="pricing">
+        <div class="price">
+          <h3>Basic</h3>
+          <div class="amt">₹999</div>
+          <p style="margin:0;color:var(--muted)">For small changes / quick setup</p>
+          <ul>
+            <li>Theme setup</li>
+            <li>Homepage layout</li>
+            <li>Header + Footer</li>
+            <li>1 revision</li>
+          </ul>
+        </div>
+
+        <div class="price featured">
+          <div class="pill">Best</div>
+          <h3>Standard</h3>
+          <div class="amt">₹2999</div>
+          <p style="margin:0;color:var(--muted)">For most brands</p>
+          <ul>
+            <li>Premium homepage design</li>
+            <li>Collections setup</li>
+            <li>2 product sections</li>
+            <li>Speed improvement</li>
+            <li>3 revisions</li>
+          </ul>
+        </div>
+
+        <div class="price">
+          <h3>Premium</h3>
+          <div class="amt">₹4999</div>
+          <p style="margin:0;color:var(--muted)">Full premium makeover</p>
+          <ul>
+            <li>Full store redesign</li>
+            <li>Product page design</li>
+            <li>Trust layout</li>
+            <li>Advanced edits</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contactCard">
+        <div>
+          <h2 style="margin:0 0 6px;">Let’s build your Shopify store.</h2>
+          <p style="margin:0;color:var(--muted)">Message me on WhatsApp and send your requirements.</p>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn btnPrimary" href="https://wa.me/8570924634" target="_blank">WhatsApp Now</a>
+          <a class="btn" href="mailto:ankitkukkar10020@gmail.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> AnkitUX.in — Shopify Store Designing Services
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").innerText = new Date().getFullYear();
+  </script>
+</body>
+</html>
