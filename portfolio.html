@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — AnkitUX</title>
+
+  <style>
+    :root{
+      --bg:#070A0F;
+      --card:#0B1220;
+      --text:#EAF0FF;
+      --muted:rgba(234,240,255,.72);
+      --border:rgba(0,229,255,.14);
+      --primary:#00E5FF;
+      --primary2:#00B8FF;
+      --shadow: 0 18px 70px rgba(0,229,255,.12);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(0,229,255,.10), transparent 55%),
+                  radial-gradient(900px 600px at 85% 30%, rgba(0,184,255,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:auto;padding:0 18px}
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,15,.72);
+      border-bottom:1px solid rgba(0,229,255,.10);
+    }
+    .navinner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;
+    }
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px}
+    .dot{
+      width:12px;height:12px;border-radius:999px;
+      background: linear-gradient(135deg,var(--primary),var(--primary2));
+      box-shadow: 0 0 0 6px rgba(0,229,255,.08);
+    }
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{
+      font-size:14px;opacity:.84;transition:.2s;
+      padding:8px 10px;border-radius:12px
+    }
+    .menu a:hover{opacity:1;background: rgba(0,229,255,.08)}
+    .menu a.active{
+      opacity: 1;
+      color: var(--primary);
+      background: rgba(0,229,255,.12);
+      border: 1px solid rgba(0,229,255,.25);
+      box-shadow: 0 0 20px rgba(0,229,255,.18);
+    }
+    .btn{
+      border:1px solid rgba(0,229,255,.22);
+      background: rgba(0,229,255,.08);
+      padding:10px 14px;border-radius:14px;font-weight:700;
+      transition:.2s;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow: var(--shadow)}
+    .btnPrimary{
+      border:none;
+      background: linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#001018;
+    }
+
+    /* HEADER */
+    .header{padding:54px 0 18px}
+    .badge{
+      display:inline-flex;gap:10px;align-items:center;
+      padding:9px 12px;border-radius:999px;
+      border:1px solid rgba(0,229,255,.18);
+      background: rgba(0,229,255,.06);
+      font-weight:700;font-size:13px;color:var(--muted);
+      width:fit-content;
+    }
+    .badge span{color:var(--primary)}
+    h1{margin:18px 0 8px;font-size:44px;letter-spacing:-.7px}
+    .sub{margin:0;color:var(--muted);line-height:1.8;max-width:70ch}
+
+    /* FEATURED PROJECT */
+    section{padding:22px 0 50px}
+    .project{
+      border-radius: var(--radius);
+      border:1px solid rgba(0,229,255,.16);
+      background: linear-gradient(180deg, rgba(0,229,255,.10), rgba(11,18,32,.72));
+      overflow:hidden;
+      box-shadow: 0 24px 100px rgba(0,0,0,.55);
+    }
+    .thumb{
+      height:260px;
+      background:
+        radial-gradient(700px 260px at 50% 0%, rgba(0,229,255,.22), transparent 62%),
+        linear-gradient(180deg, rgba(0,229,255,.08), transparent 70%),
+        rgba(7,10,15,.35);
+      border-bottom:1px solid rgba(0,229,255,.10);
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      padding:18px;
+    }
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(0,229,255,.12);
+      border:1px solid rgba(0,229,255,.22);
+      color:var(--primary);
+      font-weight:900;
+      font-size:12px;
+    }
+    .content{padding:18px}
+    .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .tags{display:flex;gap:10px;flex-wrap:wrap}
+    .tag{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,229,255,.14);
+      background: rgba(0,229,255,.06);
+      color:rgba(234,240,255,.8);
+    }
+    .desc{margin:12px 0 0;color:var(--muted);line-height:1.8;max-width:80ch}
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+    .card{
+      background: rgba(7,10,15,.45);
+      border:1px solid rgba(0,229,255,.12);
+      border-radius: 18px;
+      padding:14px;
+    }
+    .card b{display:block;margin-bottom:6px}
+    .card ul{margin:0;padding-left:18px;color:rgba(234,240,255,.68);line-height:1.9;font-size:14px}
+
+    .ctaWrap{
+      margin-top:16px;
+      background: rgba(7,10,15,.40);
+      border:1px solid rgba(0,229,255,.14);
+      border-radius: var(--radius);
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    footer{
+      padding:28px 0 40px;
+      color:rgba(234,240,255,.55);
+      border-top:1px solid rgba(0,229,255,.10);
+      margin-top:30px;
+      font-size:14px;
+    }
+
+    @media(max-width:900px){
+      .menu{display:none}
+      h1{font-size:36px}
+      .grid2{grid-template-columns:1fr}
+      .thumb{height:220px}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="container navinner">
+      <a class="logo" href="index.html"><span class="dot"></span> AnkitUX</a>
+
+      <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a class="active" href="portfolio.html">Portfolio</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <a class="btn btnPrimary" href="contact.html">Hire Me</a>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="container">
+      <div class="badge">⚡ Real Work <span>•</span> Premium Style</div>
+      <h1>Portfolio</h1>
+      <p class="sub">
+        I keep my portfolio clean and premium. Right now I’m preparing my first featured case study.
+      </p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+
+      <div class="project">
+        <div class="thumb">
+          <span class="chip">Featured Project • Coming Soon</span>
+        </div>
+
+        <div class="content">
+          <div class="row">
+            <div>
+              <h2 style="margin:0 0 6px;">Shopify Store — Premium Setup</h2>
+              <div class="tags">
+                <span class="tag">Black & Cyan UI</span>
+                <span class="tag">Dawn Theme</span>
+                <span class="tag">Conversion Layout</span>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <a class="btn btnPrimary" href="https://wa.me/8570924634" target="_blank">WhatsApp</a>
+              <a class="btn" href="contact.html">Contact</a>
+            </div>
+          </div>
+
+          <p class="desc">
+            This case study will include homepage structure, product page design, offer sections, trust elements,
+            and performance improvements.
+          </p>
+
+          <div class="grid2">
+            <div class="card">
+              <b>Work Included</b>
+              <ul>
+                <li>Homepage premium sections</li>
+                <li>Collection page cleanup</li>
+                <li>Product page improvement (PDP)</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <b>Goal</b>
+              <ul>
+                <li>Premium brand look</li>
+                <li>High retention visuals</li>
+                <li>Better trust + conversions</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ctaWrap">
+            <div>
+              <b style="display:block;font-size:18px;margin-bottom:6px">Want your store featured here?</b>
+              <span style="color:var(--muted);line-height:1.6">Let’s build your Shopify store with a premium UI.</span>
+            </div>
+            <a class="btn btnPrimary" href="https://wa.me/8570924634" target="_blank">Start on WhatsApp</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> AnkitUX.in — Shopify Store Designing Services
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").innerText = new Date().getFullYear();
+  </script>
+</body>
+</html>
